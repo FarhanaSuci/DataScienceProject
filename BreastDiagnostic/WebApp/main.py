@@ -11,9 +11,12 @@ with open("scaler.pkl", "rb") as file:
 
 # ✅ Function to make prediction
 def predict_cancer():
-    st.sidebar.header("Breast Cancer Prediction")
 
-    st.title("🔬 Breast Cancer Prediction App")
+    st.markdown("""
+    <h1 style="text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        📝 Breast Cancer InsightX:<br> AI-Powered Diagnostic Analysis<br>
+    </h1>
+    """, unsafe_allow_html=True)
     st.markdown("""
     This application predicts whether a tumor is **Benign** or **Malignant** based on diagnostic features.
     Please enter the values below to get a prediction.
@@ -58,18 +61,36 @@ def predict_cancer():
 # ✅ Main Function
 def main():
     st.sidebar.title("🔍 Select Activity")
-    choice = st.sidebar.selectbox("MODE", ("About", "Predict Cancer"))
+    choice = st.sidebar.selectbox("Select your choice", ("About", "Predict Cancer"))
 
     if choice == "Predict Cancer":
         predict_cancer()
     elif choice == "About":
-        st.title("📝 About This App")
         st.markdown("""
-        - This app helps predict **breast cancer** using diagnostic features.
-        - Built with **Streamlit** and **Machine Learning**.
-        - Model trained on **breast cancer dataset** using **Logistic Regression**.
-        - For more details, visit [Breast Cancer Dataset](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)).
-        """)
+    <h1 style="text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        🔬 Breast Cancer InsightX:<br> AI-Powered Diagnostic Analysis<br>
+    </h1>
+    """, unsafe_allow_html=True)
+        st.markdown("""
+    <ul style="font-size: 20px; line-height: 1.6;">
+        <li><strong>AI-Powered Predictions</strong> : Uses machine learning to classify tumors as Benign or Malignant.</li>
+        <li><strong>Fast & Accurate Diagnosis</strong> : Achieves <strong>99.12%</strong> accuracy using 21 key diagnostic features.</li>
+        <li><strong>Easy-to-Use</strong> : Simple form-based input, requiring no technical expertise.</li>
+        <li><strong>Instant Results</strong> : Get a diagnosis in seconds without waiting for lab results.</li>
+        <li><strong>Personalized Insights</strong> : Patients can enter their own diagnostic parameters.</li>
+        <li><strong>Secure & Confidential</strong> : Ensures data privacy & no storage of personal details.</li>
+    </ul>
+""", unsafe_allow_html=True)
+
+        # ✅ Footer: Add Developer and Organization Information with Styling
+    st.markdown("""
+    ---
+    <div style="background-color: ; padding: 25px 0; text-align: center; color: white; font-size: 20px; border-radius: 25px;">
+        <p><br><br><strong>Developers:<br> Farhana Akter Suci (B190305001) & Rifah Sajida Deya (B190305004)</strong></p>
+        <p><strong>CSE , JnU</strong></p>
+        
+    </div>
+    """, unsafe_allow_html=True)
 
 # ✅ Run the app
 if __name__ == '__main__':
