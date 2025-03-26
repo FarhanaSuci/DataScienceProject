@@ -3,10 +3,10 @@ import numpy as np
 import pickle
 
 # ✅ Load trained model & scaler
-with open("BreastCancer.pkl", "rb") as file:
+with open("xgb_model.pkl", "rb") as file:
     model = pickle.load(file)
 
-with open("scaler.pkl", "rb") as file:
+with open("xgb_scaler.pkl", "rb") as file:
     scaler = pickle.load(file)
 
 # ✅ Function to make prediction
@@ -22,22 +22,19 @@ def predict_cancer():
     Please enter the values below to get a prediction.
     """)
 
-    name = st.text_input("Patient Name:")
-    
     # Input fields for selected features
-    feature_labels = [
-        'Radius_mean', 'Texture_mean', 'Perimeter_mean', 'Smoothness_mean',
-        'Compactness_mean', 'Concavity_mean', 'Concave_points_mean',
-        'Symmetry_mean', 'Radius_se', 'Texture_se', 'Perimeter_se', 'Area_se',
-        'Radius_worst', 'Texture_worst', 'Perimeter_worst', 'Smoothness_worst',
-        'Compactness_worst', 'Concavity_worst', 'Concave_points_worst',
-        'Symmetry_worst', 'Fractal_dimension_worst'
-    ]
+    feature_limits = {
+        'Perimeter_mean': (0.0, 200.0),
+        'Smoothness_mean': (0.0, 1.0),
+        'Compactness_mean': (0.0, 1.0),
+        'Texture_worst': (0.0, 50.0),
+        'Perimeter_worst': (0.0, 250.0)
+    }
     
     input_features = []
     
-    for feature in feature_labels:
-        value = st.number_input(f"{feature}:", min_value=0.0, max_value=100.0, step=0.01, format="%.2f")
+    for feature, (min_val, max_val) in feature_limits.items():
+        value = st.number_input(f"{feature}:", min_value=min_val, max_value=max_val, step=0.01, format="%.2f")
         input_features.append(value)
     
     submit = st.button("🔍 Predict")
@@ -54,9 +51,9 @@ def predict_cancer():
 
         # Display result
         if prediction[0] == 1:
-            st.error(f"🛑 {name}, the tumor is **Malignant**. Please consult a doctor immediately.")
+            st.error(f"🛑 The tumor is **Malignant**. Please consult a doctor immediately.")
         else:
-            st.success(f"✅ {name}, the tumor is **Benign**. No need to worry!")
+            st.success(f"✅ The tumor is **Benign**. No need to worry!")
 
 # ✅ Main Function
 def main():
@@ -74,7 +71,7 @@ def main():
         st.markdown("""
     <ul style="font-size: 20px; line-height: 1.6;">
         <li><strong>AI-Powered Predictions</strong> : Uses machine learning to classify tumors as Benign or Malignant.</li>
-        <li><strong>Fast & Accurate Diagnosis</strong> : Achieves <strong>99.12%</strong> accuracy using 21 key diagnostic features.</li>
+        <li><strong>Fast & Accurate Diagnosis</strong> : Achieves <strong>98.25%</strong> accuracy using 5 key diagnostic features.</li>
         <li><strong>Easy-to-Use</strong> : Simple form-based input, requiring no technical expertise.</li>
         <li><strong>Instant Results</strong> : Get a diagnosis in seconds without waiting for lab results.</li>
         <li><strong>Personalized Insights</strong> : Patients can enter their own diagnostic parameters.</li>
@@ -92,6 +89,6 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
-# ✅ Run the app
+
 if __name__ == '__main__':
     main()
